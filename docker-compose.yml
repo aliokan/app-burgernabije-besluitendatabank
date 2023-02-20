@@ -18,7 +18,8 @@ services:
       BATCH_SIZE: 1000
     volumes:
       - ./data/files/consumer-files/besluiten:/consumer-files/
-      - ./config/consumer/example-custom-dispatching:/config/triples-dispatching/custom-dispatching
+      # line to enable custom dispatching. Can be used to log the data
+      # - ./config/consumer/example-custom-dispatching:/config/triples-dispatching/custom-dispatching 
     labels:
       - "logging=true"
 
@@ -36,7 +37,7 @@ services:
   dispatcher:
     image: semtech/mu-dispatcher:2.0.0
     links:
-      - resource:resource
+      - resources:resource
     volumes:
       - ./config/dispatcher:/config
 
@@ -47,7 +48,7 @@ services:
     links:
       - dispatcher:dispatcher
     ports:
-      - "80:80"
+      - "8000:80"
       
   resources:
     image: semtech/mu-cl-resources:1.20.0
